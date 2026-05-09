@@ -136,6 +136,268 @@
   </section>
 
   <!-- ===== ポートフォリオ ===== -->
+  <!-- ポートフォリオ：LP制作実績セクション -->
+<section id="lp-works" class="portfolio-section">
+  <div class="portfolio-container">
+    <div class="section-heading">
+      <span class="section-label">Portfolio</span>
+      <h2>LP制作実績</h2>
+      <p>
+        AIツールを活用し、ビジネス向けランディングページを制作しました。
+        構成設計・コピー作成・デザイン調整まで一貫して対応しています。
+      </p>
+    </div>
+
+    <div class="work-card">
+      <div class="work-content">
+        <p class="work-category">Landing Page Design</p>
+        <h3>AIビジネス向けLP制作</h3>
+        <p class="work-description">
+          Readdy AIを活用して制作したランディングページです。
+          サービスの魅力が伝わるファーストビュー、CTA導線、訴求コピーを意識して構成しました。
+        </p>
+
+        <ul class="work-points">
+          <li>AIツールを活用したLP制作</li>
+          <li>ビジネス向けの構成・コピー設計</li>
+          <li>ユーザー導線を意識したCTA配置</li>
+          <li>ポートフォリオ掲載用の実制作サンプル</li>
+        </ul>
+
+        <a
+          href="https://readdy.ai/project/78d7f257-5f87-4b57-86e7-74cac14ff866"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="work-button"
+        >
+          制作したLPを見る
+        </a>
+      </div>
+
+      <div class="work-preview">
+        <div class="preview-window">
+          <div class="preview-dots">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="preview-body">
+            <p class="preview-title">AI Business LP</p>
+            <p class="preview-text">Created with Readdy AI</p>
+            <div class="preview-line large"></div>
+            <div class="preview-line"></div>
+            <div class="preview-line short"></div>
+            <div class="preview-cta">View LP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .portfolio-section {
+    padding: 80px 20px;
+    background: #f8fafc;
+    color: #0f172a;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .portfolio-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .section-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: #2563eb;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .section-heading h2 {
+    margin: 0 0 16px;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.2;
+  }
+
+  .section-heading p {
+    max-width: 680px;
+    margin: 0 auto;
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .work-card {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 32px;
+    align-items: center;
+    padding: 36px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+  }
+
+  .work-category {
+    margin: 0 0 8px;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .work-content h3 {
+    margin: 0 0 14px;
+    font-size: clamp(24px, 3vw, 34px);
+  }
+
+  .work-description {
+    margin: 0 0 20px;
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  .work-points {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 0 0 28px;
+    list-style: none;
+  }
+
+  .work-points li {
+    position: relative;
+    padding-left: 24px;
+    color: #334155;
+    line-height: 1.6;
+  }
+
+  .work-points li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #2563eb;
+    font-weight: 800;
+  }
+
+  .work-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 22px;
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.25);
+  }
+
+  .work-button:hover {
+    transform: translateY(-2px);
+    background: #1d4ed8;
+    box-shadow: 0 16px 30px rgba(37, 99, 235, 0.32);
+  }
+
+  .work-preview {
+    display: flex;
+    justify-content: center;
+  }
+
+  .preview-window {
+    width: 100%;
+    max-width: 330px;
+    overflow: hidden;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border: 1px solid #bfdbfe;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .preview-dots {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.55);
+  }
+
+  .preview-dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #94a3b8;
+  }
+
+  .preview-body {
+    padding: 34px 26px;
+  }
+
+  .preview-title {
+    margin: 0 0 8px;
+    font-size: 24px;
+    font-weight: 800;
+    color: #1e3a8a;
+  }
+
+  .preview-text {
+    margin: 0 0 24px;
+    color: #475569;
+  }
+
+  .preview-line {
+    height: 12px;
+    margin-bottom: 12px;
+    border-radius: 999px;
+    background: rgba(37, 99, 235, 0.25);
+  }
+
+  .preview-line.large {
+    width: 100%;
+  }
+
+  .preview-line.short {
+    width: 58%;
+  }
+
+  .preview-cta {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 768px) {
+    .portfolio-section {
+      padding: 60px 16px;
+    }
+
+    .work-card {
+      grid-template-columns: 1fr;
+      padding: 28px;
+    }
+
+    .work-preview {
+      order: -1;
+    }
+  }
+</style>
+
   <section class="portfolio" id="portfolio">
     <div class="container">
       <h2 class="section-title">ポートフォリオ</h2>
