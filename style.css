@@ -751,3 +751,29 @@ section { padding: 88px 0; }
   .hero-title { font-size: 1.85rem; }
   .section-title { font-size: 1.5rem; }
 }
+
+/* ===== ポートフォリオ画像設定 ===== */
+
+.portfolio-thumb {
+  height: 420px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+/* 美容サロン向けLP */
+.thumb-1 {
+  background-image: url('化粧品メーカーLP.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* チラシ制作 */
+.thumb-2 {
+  background: linear-gradient(135deg, #f59e0b, #f97316);
+}
+
+/* 採用資料 */
+.thumb-3 {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
