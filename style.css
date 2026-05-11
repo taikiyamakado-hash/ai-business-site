@@ -770,7 +770,10 @@ section { padding: 88px 0; }
 
 /* チラシ制作 */
 .thumb-2 {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
+  background-image: url('業務改善チラシ.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
 }
 
 /* 採用資料 */
