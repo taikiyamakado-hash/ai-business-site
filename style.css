@@ -776,7 +776,10 @@ section { padding: 88px 0; }
   background-repeat: no-repeat;
 }
 
-/* 採用資料 */
-.thumb-3 {
-  background: linear-gradient(135deg, #10b981, #059669);
+/* 動画ポートフォリオ */
+
+.thumb-3 video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
