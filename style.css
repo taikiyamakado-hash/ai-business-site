@@ -783,3 +783,22 @@ section { padding: 88px 0; }
   height: 100%;
   object-fit: cover;
 }
+
+/* AI動画セクション */
+.ai-video-section {
+  padding: 80px 20px;
+  background: #f8fafc;
+}
+
+.ai-video-wrapper {
+  max-width: 1000px;
+  margin: 40px auto 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.ai-video-wrapper video {
+  width: 100%;
+  display: block;
+}
