@@ -20,15 +20,15 @@
     }
 
     body {
-      font-family: "Noto Sans JP", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Noto Sans JP", system-ui, sans-serif;
       background: #080b14;
       color: #ffffff;
       line-height: 1.8;
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
     .container {
@@ -56,49 +56,46 @@
 
     .logo {
       font-weight: 800;
-      letter-spacing: 0.04em;
       font-size: 18px;
     }
 
     .nav {
       display: flex;
-      gap: 26px;
+      gap: 24px;
       font-size: 14px;
       color: #d6def8;
-    }
-
-    .nav a:hover {
-      color: #6ee7ff;
     }
 
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 120px 0 80px;
-      background:
-        radial-gradient(circle at top right, rgba(63, 135, 255, 0.28), transparent 34%),
-        radial-gradient(circle at bottom left, rgba(56, 232, 255, 0.18), transparent 35%),
-        linear-gradient(135deg, #080b14 0%, #101936 52%, #07101f 100%);
       position: relative;
       overflow: hidden;
+      padding: 120px 0 80px;
     }
 
-    .hero::before {
-      content: "";
+    .hero-video {
       position: absolute;
-      width: 420px;
-      height: 420px;
-      border-radius: 50%;
-      background: rgba(110, 231, 255, 0.12);
-      filter: blur(20px);
-      right: -120px;
-      top: 160px;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
     }
 
-    .hero-content {
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8, 11, 20, 0.88), rgba(8, 11, 20, 0.56)),
+        linear-gradient(180deg, rgba(8, 11, 20, 0.35), rgba(8, 11, 20, 0.86));
+      z-index: 1;
+    }
+
+    .hero .container {
       position: relative;
-      max-width: 860px;
+      z-index: 2;
     }
 
     .hero-badge {
@@ -115,7 +112,6 @@
     .hero-title {
       font-size: clamp(42px, 7vw, 76px);
       line-height: 1.15;
-      letter-spacing: -0.04em;
       margin-bottom: 28px;
     }
 
@@ -124,10 +120,10 @@
     }
 
     .hero-desc {
-      font-size: clamp(16px, 2.2vw, 21px);
+      font-size: 18px;
       color: #d9e3ff;
       margin-bottom: 36px;
-      max-width: 760px;
+      max-width: 720px;
     }
 
     .hero-buttons {
@@ -150,23 +146,13 @@
 
     .btn-primary {
       background: linear-gradient(135deg, #35d8ff, #5477ff);
-      color: #fff;
+      color: white;
       box-shadow: 0 14px 36px rgba(53, 216, 255, 0.22);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 18px 42px rgba(53, 216, 255, 0.34);
     }
 
     .btn-secondary {
       border: 1px solid rgba(255,255,255,0.2);
-      color: #eaf1ff;
-      background: rgba(255,255,255,0.04);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
     }
 
     section {
@@ -174,8 +160,7 @@
     }
 
     .section-title {
-      font-size: clamp(30px, 4vw, 46px);
-      line-height: 1.25;
+      font-size: 42px;
       margin-bottom: 18px;
       text-align: center;
     }
@@ -183,7 +168,6 @@
     .section-desc {
       text-align: center;
       color: #c7d1eb;
-      font-size: 17px;
       margin-bottom: 48px;
     }
 
@@ -205,11 +189,6 @@
       gap: 22px;
     }
 
-    .services-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-
-    .card,
     .about-item,
     .service-card,
     .case-card {
@@ -217,53 +196,29 @@
       border: 1px solid rgba(255,255,255,0.1);
       border-radius: 22px;
       padding: 28px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.18);
-    }
-
-    .card:hover,
-    .about-item:hover,
-    .service-card:hover,
-    .case-card:hover {
-      border-color: rgba(110, 231, 255, 0.35);
-      transform: translateY(-3px);
-      transition: 0.25s;
     }
 
     h3 {
-      font-size: 21px;
       margin-bottom: 12px;
-      color: #ffffff;
-    }
-
-    .card p,
-    .about-item p,
-    .service-card p,
-    .case-card p {
-      color: #c7d1eb;
-      font-size: 15px;
+      font-size: 21px;
     }
 
     .problem-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
-      max-width: 900px;
-      margin: 0 auto;
     }
 
     .problem-item {
-      padding: 20px 22px;
+      padding: 20px;
       border-radius: 18px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.09);
-      color: #dbe5ff;
     }
 
     .problem-item::before {
-      content: "✓";
+      content: "✓ ";
       color: #6ee7ff;
-      font-weight: bold;
-      margin-right: 10px;
     }
 
     .note {
@@ -273,24 +228,9 @@
       font-size: 13px;
     }
 
-    .area-box {
-      max-width: 840px;
-      margin: 0 auto;
-      text-align: center;
-      background: linear-gradient(135deg, rgba(53, 216, 255, 0.12), rgba(84, 119, 255, 0.12));
-      border: 1px solid rgba(110, 231, 255, 0.22);
-      border-radius: 26px;
-      padding: 40px 28px;
-    }
-
-    .area-box strong {
-      display: block;
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-
+    .area-box,
     .contact-box {
-      max-width: 760px;
+      max-width: 840px;
       margin: 0 auto;
       text-align: center;
       background: rgba(255,255,255,0.06);
@@ -299,18 +239,12 @@
       padding: 44px 28px;
     }
 
-    .contact-box p {
-      color: #d9e3ff;
-      margin-bottom: 28px;
-    }
-
     footer {
       padding: 32px 0;
       text-align: center;
       color: #8f9bb7;
       font-size: 13px;
       background: #050711;
-      border-top: 1px solid rgba(255,255,255,0.08);
     }
 
     .fixed-cta {
@@ -329,7 +263,6 @@
       background: linear-gradient(135deg, #35d8ff, #5477ff);
       color: white;
       font-weight: 800;
-      box-shadow: 0 12px 34px rgba(53, 216, 255, 0.35);
     }
 
     @media (max-width: 860px) {
@@ -344,19 +277,13 @@
         grid-template-columns: 1fr;
       }
 
-      section {
-        padding: 72px 0;
-      }
-
       .hero {
-        min-height: auto;
         padding-top: 140px;
       }
 
       .fixed-cta {
         left: 16px;
         right: 16px;
-        bottom: 16px;
       }
 
       .fixed-cta a {
@@ -368,263 +295,240 @@
 
 <body>
 
-  <header>
-    <div class="container header-inner">
-      <a href="#" class="logo">AI業務改善アドバイザー</a>
+<header>
+  <div class="container header-inner">
+    <a href="#" class="logo">AI業務改善アドバイザー</a>
 
-      <nav class="nav">
-        <a href="#about">特徴</a>
-        <a href="#services">サービス</a>
-        <a href="#cases">改善例</a>
-        <a href="#area">対応エリア</a>
-        <a href="#contact">無料相談</a>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-
-    <section class="hero">
-<video class="hero-video" autoplay muted loop playsinline>
-  <source src="ai-business-cm.mp4" type="video/mp4">
-</video>
-<div class="hero-overlay"></div>
-      
-      <div class="container">
-        <div class="hero-content">
-
-          <p class="hero-badge">
-            御殿場・静岡東部〜中部の中小企業・個人事業主向け
-          </p>
-
-          <h1 class="hero-title">
-            AIで、日々の業務を<br>
-            <span>もっとラクに、もっと速く。</span>
-          </h1>
-
-          <p class="hero-desc">
-            業務自動化・AIコンサル・動画制作・チラシ作成・LP制作まで。<br>
-            「何から始めればいいかわからない」段階から、現場に合わせてわかりやすくサポートします。
-          </p>
-
-          <div class="hero-buttons">
-            <a href="#contact" class="btn-primary">無料相談はこちら</a>
-            <a href="#services" class="btn-secondary">サービスを見る</a>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="about">
-      <div class="container">
-
-        <h2 class="section-title">AI業務改善アドバイザーとは？</h2>
-
-        <p class="section-desc">
-          AIを活用して、日々の業務を効率化し、<br>
-          「時間が足りない」「作業が多い」を改善するサポートを行います。
-        </p>
-
-        <div class="about-box">
-
-          <div class="about-item">
-            <h3>現場に合わせたAI活用</h3>
-            <p>
-              難しい専門用語ではなく、実際の業務にどう使えるかをわかりやすく整理します。
-            </p>
-          </div>
-
-          <div class="about-item">
-            <h3>小さく始められる改善</h3>
-            <p>
-              いきなり大きなシステムを作るのではなく、日々の作業効率化から始められます。
-            </p>
-          </div>
-
-          <div class="about-item">
-            <h3>制作・集客まで対応</h3>
-            <p>
-              AI活用だけでなく、動画・チラシ・LP制作など、集客に必要な制作も支援します。
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="services" id="services">
-      <div class="container">
-
-        <h2 class="section-title">サービス内容</h2>
-
-        <p class="section-desc">
-          AIを活用して、業務効率化と集客改善をまとめて支援します。
-        </p>
-
-        <div class="services-grid">
-
-          <div class="service-card">
-            <h3>業務自動化</h3>
-            <p>
-              繰り返しの事務作業、メール文作成、資料作成、データ整理などをAIで効率化します。
-            </p>
-          </div>
-
-          <div class="service-card">
-            <h3>AIコンサル</h3>
-            <p>
-              ChatGPTやAIツールを、どのように業務へ活用するかをご提案します。
-            </p>
-          </div>
-
-          <div class="service-card">
-            <h3>動画作成</h3>
-            <p>
-              商品紹介・SNS向け・店舗PRなど、AIを活用した動画制作を行います。
-            </p>
-          </div>
-
-          <div class="service-card">
-            <h3>チラシ作成</h3>
-            <p>
-              集客・採用・イベント向けチラシを、AIを活用して効率的に制作します。
-            </p>
-          </div>
-
-          <div class="service-card">
-            <h3>LP制作</h3>
-            <p>
-              問い合わせにつながる構成を意識した、シンプルで見やすいLPを制作します。
-            </p>
-          </div>
-
-          <div class="service-card">
-            <h3>ホームページ改善</h3>
-            <p>
-              古いホームページの改善、スマホ対応、導線整理なども対応可能です。
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <section class="about" id="problems">
-      <div class="container">
-
-        <h2 class="section-title">こんなお悩みはありませんか？</h2>
-
-        <p class="section-desc">
-          AIは、特別な会社だけのものではありません。<br>
-          日々の小さな手間を減らすところから活用できます。
-        </p>
-
-        <div class="problem-list">
-          <div class="problem-item">毎日の事務作業に時間がかかっている</div>
-          <div class="problem-item">SNS投稿や文章作成が負担になっている</div>
-          <div class="problem-item">チラシやLPを作りたいが時間がない</div>
-          <div class="problem-item">AIを使いたいが、何から始めればいいかわからない</div>
-          <div class="problem-item">問い合わせにつながる導線を作りたい</div>
-          <div class="problem-item">少人数でも効率よく業務を回したい</div>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="cases" id="cases">
-      <div class="container">
-
-        <h2 class="section-title">改善モデルケース</h2>
-
-        <p class="section-desc">
-          実際の業務内容によって効果は異なりますが、<br>
-          AI活用により以下のような効率化が期待できます。
-        </p>
-
-        <div class="case-grid">
-
-          <div class="case-card">
-            <h3>資料作成の効率化</h3>
-            <p>
-              提案資料・採用資料・社内資料などのたたき台作成をAIで支援。文章作成や構成整理の時間短縮を目指します。
-            </p>
-          </div>
-
-          <div class="case-card">
-            <h3>チラシ・LP制作の短納期化</h3>
-            <p>
-              コピー作成・構成案・デザイン案をAIで効率化し、制作準備をスピーディーに進めます。
-            </p>
-          </div>
-
-          <div class="case-card">
-            <h3>日常業務の時短</h3>
-            <p>
-              メール返信文、議事録、投稿文、案内文などをAIで作成補助。毎日の細かな作業を減らします。
-            </p>
-          </div>
-
-        </div>
-
-        <p class="note">
-          ※上記は業務改善のモデルケースです。実際の削減時間・成果は業務内容や運用方法により異なります。
-        </p>
-
-      </div>
-    </section>
-
-    <section class="services" id="area">
-      <div class="container">
-
-        <h2 class="section-title">対応エリア</h2>
-
-        <div class="area-box">
-          <strong>御殿場・静岡東部〜中部メイン</strong>
-          <p>
-            地域の中小企業・個人事業主の方を中心にサポートしています。<br>
-            内容によってはオンラインでのご相談も可能です。
-          </p>
-        </div>
-
-      </div>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="container">
-
-        <h2 class="section-title">無料相談</h2>
-
-        <p class="section-desc">
-          「AIを使ってみたいけど、何から始めればいいかわからない」<br>
-          そんな方もお気軽にご相談ください。
-        </p>
-
-        <div class="contact-box">
-          <p>
-            現在の業務内容をお聞きし、AIで改善できそうなポイントをご提案します。<br>
-            まずはメールでお気軽にお問い合わせください。
-          </p>
-
-          <a href="mailto:taiki.yamakado@ai-plus.school" class="btn-primary">
-            メールで相談する
-          </a>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <div class="fixed-cta">
-    <a href="#contact">無料相談する</a>
+    <nav class="nav">
+      <a href="#about">特徴</a>
+      <a href="#services">サービス</a>
+      <a href="#cases">改善例</a>
+      <a href="#area">対応エリア</a>
+      <a href="#contact">無料相談</a>
+    </nav>
   </div>
+</header>
 
-  <footer>
-    <div class="container">
-      <p>© AI業務改善アドバイザー</p>
+<main>
+
+<section class="hero">
+
+  <video class="hero-video" autoplay muted loop playsinline>
+    <source src="AI業務改善CM.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-overlay"></div>
+
+  <div class="container">
+
+    <p class="hero-badge">
+      御殿場・静岡東部〜中部の中小企業・個人事業主向け
+    </p>
+
+    <h1 class="hero-title">
+      AIで、日々の業務を<br>
+      <span>もっとラクに、もっと速く。</span>
+    </h1>
+
+    <p class="hero-desc">
+      業務自動化・AIコンサル・動画制作・チラシ作成・LP制作まで。<br>
+      現場に合わせてわかりやすくサポートします。
+    </p>
+
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-primary">無料相談はこちら</a>
+      <a href="#services" class="btn-secondary">サービスを見る</a>
     </div>
-  </footer>
+
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="container">
+
+    <h2 class="section-title">AI業務改善アドバイザーとは？</h2>
+
+    <p class="section-desc">
+      AIを活用して、日々の業務を効率化し、<br>
+      「時間が足りない」「作業が多い」を改善します。
+    </p>
+
+    <div class="about-box">
+
+      <div class="about-item">
+        <h3>業務効率化</h3>
+        <p>
+          メール作成、資料作成、SNS投稿などをAIで効率化します。
+        </p>
+      </div>
+
+      <div class="about-item">
+        <h3>AI導入サポート</h3>
+        <p>
+          ChatGPTなどのAIツールを現場に合わせて導入支援します。
+        </p>
+      </div>
+
+      <div class="about-item">
+        <h3>制作支援</h3>
+        <p>
+          動画制作・チラシ制作・LP制作まで対応可能です。
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+
+    <h2 class="section-title">サービス内容</h2>
+
+    <p class="section-desc">
+      AIを活用して、業務効率化と集客改善を支援します。
+    </p>
+
+    <div class="services-grid">
+
+      <div class="service-card">
+        <h3>業務自動化</h3>
+        <p>事務作業、資料作成、データ整理などを効率化します。</p>
+      </div>
+
+      <div class="service-card">
+        <h3>AIコンサル</h3>
+        <p>AIをどう業務に活用するかをご提案します。</p>
+      </div>
+
+      <div class="service-card">
+        <h3>動画作成</h3>
+        <p>商品紹介・SNS向け動画をAI活用で制作します。</p>
+      </div>
+
+      <div class="service-card">
+        <h3>チラシ作成</h3>
+        <p>集客・採用向けチラシを効率的に制作します。</p>
+      </div>
+
+      <div class="service-card">
+        <h3>LP制作</h3>
+        <p>問い合わせにつながるLPを制作します。</p>
+      </div>
+
+      <div class="service-card">
+        <h3>HP改善</h3>
+        <p>古いホームページの改善や導線整理を行います。</p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="cases" id="cases">
+  <div class="container">
+
+    <h2 class="section-title">改善モデルケース</h2>
+
+    <p class="section-desc">
+      AI活用により、以下のような効率化が期待できます。
+    </p>
+
+    <div class="case-grid">
+
+      <div class="case-card">
+        <h3>資料作成の効率化</h3>
+        <p>提案資料・社内資料作成の時間短縮を目指します。</p>
+      </div>
+
+      <div class="case-card">
+        <h3>制作の短納期化</h3>
+        <p>チラシ・LP制作準備をスピーディーに進めます。</p>
+      </div>
+
+      <div class="case-card">
+        <h3>日常業務の時短</h3>
+        <p>メール返信、議事録、投稿文作成を効率化します。</p>
+      </div>
+
+    </div>
+
+    <p class="note">
+      ※実際の成果は業務内容により異なります。
+    </p>
+
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+
+    <h2 class="section-title">こんなお悩みありませんか？</h2>
+
+    <div class="problem-list">
+      <div class="problem-item">事務作業に時間がかかる</div>
+      <div class="problem-item">SNS投稿が負担</div>
+      <div class="problem-item">AIを使いたいがわからない</div>
+      <div class="problem-item">少人数で効率よく回したい</div>
+    </div>
+
+  </div>
+</section>
+
+<section class="services" id="area">
+  <div class="container">
+
+    <h2 class="section-title">対応エリア</h2>
+
+    <div class="area-box">
+      <p>
+        御殿場・静岡東部〜中部メイン<br>
+        オンライン対応可能
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+
+    <h2 class="section-title">無料相談</h2>
+
+    <p class="section-desc">
+      AIを使ってみたい方もお気軽にご相談ください。
+    </p>
+
+    <div class="contact-box">
+
+      <p>
+        現在の業務内容をお聞きし、改善ポイントをご提案します。
+      </p>
+
+      <a href="mailto:taiki.yamakado@ai-plus.school" class="btn-primary">
+        メールで相談する
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<div class="fixed-cta">
+  <a href="#contact">無料相談する</a>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© AI業務改善アドバイザー</p>
+  </div>
+</footer>
+
 <script src="script.js"></script>
+
 </body>
 </html>
