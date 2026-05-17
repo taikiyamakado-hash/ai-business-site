@@ -1,123 +1,155 @@
-/* =============================================
-   AI業務効率化アドバイザー — スクリプト
-   ============================================= */
+// ==============================
+// AI業務改善アドバイザー site script
+// ==============================
 
-/* === ヘッダー: スクロールで影を追加 === */
-const header = document.getElementById('header');
-
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 40);
-}, { passive: true });
-
-/* === ハンバーガーメニュー === */
-const hamburger = document.getElementById('hamburger');
-const nav       = document.getElementById('nav');
-
-hamburger.addEventListener('click', () => {
-  const isOpen = hamburger.classList.toggle('active');
-  nav.classList.toggle('open', isOpen);
-  hamburger.setAttribute('aria-label', isOpen ? 'メニューを閉じる' : 'メニューを開く');
+// ページ読み込み後に実行
+document.addEventListener("DOMContentLoaded", () => {
+  initSmoothScroll();
+  initHeaderScroll();
+  initScrollAnimation();
+  initActiveNav();
+  initFixedCta();
 });
 
-// リンクをクリックしたらメニューを閉じる
-nav.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    nav.classList.remove('open');
-    hamburger.setAttribute('aria-label', 'メニューを開く');
-  });
-});
+// スムーズスクロール
+function initSmoothScroll() {
+  const links = document.querySelectorAll('a[href^="#"]');
 
-/* === スムーススクロール (ヘッダー高さ分オフセット) === */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', e => {
-    const target = document.querySelector(anchor.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    const offset = header.offsetHeight + 8;
-    window.scrollTo({
-      top: target.getBoundingClientRect().top + window.scrollY - offset,
-      behavior: 'smooth'
+  links.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const targetId = link.getAttribute("href");
+
+      if (!targetId || targetId === "#") return;
+
+      const target = document.querySelector(targetId);
+
+      if (!target) return;
+
+      event.preventDefault();
+
+      const header = document.querySelector("header");
+      const headerHeight = header ? header.offsetHeight : 0;
+      const targetPosition =
+        target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth",
+      });
     });
   });
-});
+}
 
-/* === スクロールアニメーション (Intersection Observer) === */
-const fadeItems = document.querySelectorAll('.fade-in');
+// スクロール時にヘッダーの見た目を少し変更
+function initHeaderScroll() {
+  const header = document.querySelector("header");
 
-const appearObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('visible');
-    appearObserver.unobserve(entry.target);
+  if (!header) return;
+
+  const updateHeader = () => {
+    if (window.scrollY > 40) {
+      header.style.background = "rgba(8, 11, 20, 0.94)";
+      header.style.boxShadow = "0 10px 30px rgba(0, 0, 0, 0.22)";
+    } else {
+      header.style.background = "rgba(8, 11, 20, 0.78)";
+      header.style.boxShadow = "none";
+    }
+  };
+
+  updateHeader();
+  window.addEventListener("scroll", updateHeader);
+}
+
+// スクロール時にカードや見出しをふわっと表示
+function initScrollAnimation() {
+  const targets = document.querySelectorAll(
+    ".section-title, .section-desc, .about-item, .service-card, .problem-item, .case-card, .area-box, .contact-box"
+  );
+
+  if (!targets.length) return;
+
+  targets.forEach((target) => {
+    target.style.opacity = "0";
+    target.style.transform = "translateY(24px)";
+    target.style.transition = "opacity 0.7s ease, transform 0.7s ease";
   });
-}, {
-  threshold: 0.12,
-  rootMargin: '0px 0px -40px 0px'
-});
 
-// グリッド内カードはずらして出現させる
-const staggerGroups = [
-  '.problems-grid .problem-card',
-  '.services-grid .service-card',
-  '.portfolio-grid .portfolio-card'
-];
+  const observer = new IntersectionObserver(
+    (entries, observerInstance) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = "1";
+          entry.target.style.transform = "translateY(0)";
+          observerInstance.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+    }
+  );
 
-staggerGroups.forEach(selector => {
-  document.querySelectorAll(selector).forEach((card, i) => {
-    card.style.transitionDelay = `${i * 0.08}s`;
-  });
-});
+  targets.forEach((target) => observer.observe(target));
+}
 
-fadeItems.forEach(el => appearObserver.observe(el));
+// 現在見ているセクションに合わせてナビの色を変更
+function initActiveNav() {
+  const navLinks = document.querySelectorAll(".nav a");
+  const sections = document.querySelectorAll("section[id]");
 
-/* === お問い合わせフォーム (mailto 連携) === */
-const contactForm = document.getElementById('contactForm');
-const formError   = document.getElementById('formError');
+  if (!navLinks.length || !sections.length) return;
 
-contactForm.addEventListener('submit', e => {
-  e.preventDefault();
-  formError.classList.remove('show');
+  const updateActiveNav = () => {
+    let currentId = "";
 
-  const name    = document.getElementById('name').value.trim();
-  const email   = document.getElementById('email').value.trim();
-  const message = document.getElementById('message').value.trim();
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop - 120;
+      const sectionHeight = section.offsetHeight;
 
-  // 簡易バリデーション
-  if (!name) {
-    showError('お名前を入力してください。');
-    document.getElementById('name').focus();
-    return;
-  }
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    showError('正しいメールアドレスを入力してください。');
-    document.getElementById('email').focus();
-    return;
-  }
-  if (!message) {
-    showError('メッセージを入力してください。');
-    document.getElementById('message').focus();
-    return;
-  }
+      if (
+        window.scrollY >= sectionTop &&
+        window.scrollY < sectionTop + sectionHeight
+      ) {
+        currentId = section.getAttribute("id");
+      }
+    });
 
-  const company = document.getElementById('company').value.trim();
-  const service = document.getElementById('service').value;
+    navLinks.forEach((link) => {
+      const href = link.getAttribute("href");
 
-  const subject = '【ホームページからのお問い合わせ】';
-  const body =
-    `お名前: ${name}\n` +
-    `会社名: ${company || '未入力'}\n` +
-    `メールアドレス: ${email}\n` +
-    `ご相談内容: ${service || '未選択'}\n\n` +
-    `── メッセージ ──────────────\n${message}`;
+      if (href === `#${currentId}`) {
+        link.style.color = "#6ee7ff";
+        link.style.fontWeight = "700";
+      } else {
+        link.style.color = "#d6def8";
+        link.style.fontWeight = "400";
+      }
+    });
+  };
 
-  window.location.href =
-    `mailto:t.yamakado.ai.partner@gmail.com` +
-    `?subject=${encodeURIComponent(subject)}` +
-    `&body=${encodeURIComponent(body)}`;
-});
+  updateActiveNav();
+  window.addEventListener("scroll", updateActiveNav);
+}
 
-function showError(msg) {
-  formError.textContent = msg;
-  formError.classList.add('show');
+// 一番下付近では固定CTAを少し控えめにする
+function initFixedCta() {
+  const fixedCta = document.querySelector(".fixed-cta");
+
+  if (!fixedCta) return;
+
+  const updateFixedCta = () => {
+    const scrollBottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 120;
+
+    if (scrollBottom) {
+      fixedCta.style.opacity = "0.35";
+      fixedCta.style.pointerEvents = "none";
+    } else {
+      fixedCta.style.opacity = "1";
+      fixedCta.style.pointerEvents = "auto";
+    }
+  };
+
+  updateFixedCta();
+  window.addEventListener("scroll", updateFixedCta);
 }
