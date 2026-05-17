@@ -290,6 +290,31 @@
         width: 100%;
       }
     }
+.movie-section {
+  background: #080b14;
+  padding: 96px 0;
+}
+
+.movie-box {
+  max-width: 960px;
+  margin: 0 auto;
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  background: #000;
+}
+
+.movie-box video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.movie-section .section-desc {
+  margin-bottom: 40px;
+}
+    
   </style>
 </head>
 
@@ -313,11 +338,6 @@
 
 <section class="hero">
 
-  <video class="hero-video" autoplay muted loop playsinline>
-    <source src="AI業務改善CM.mp4" type="video/mp4">
-  </video>
-
-  <div class="hero-overlay"></div>
 
   <div class="container">
 
@@ -343,6 +363,26 @@
   </div>
 </section>
 
+  <section class="movie-section" id="movie">
+  <div class="container">
+
+    <h2 class="section-title">サービス紹介動画</h2>
+
+    <p class="section-desc">
+      まずはこちらのイメージ動画をご覧ください。
+    </p>
+
+    <div class="movie-box">
+      <video controls playsinline preload="metadata">
+        <source src="AI業務改善CM.mp4" type="video/mp4">
+        お使いのブラウザは動画再生に対応していません。
+      </video>
+    </div>
+
+  </div>
+</section>
+
+  
 <section class="about" id="about">
   <div class="container">
 
