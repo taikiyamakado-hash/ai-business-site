@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">現場に合わせたAI活用支援のイメージ</title>
+  <desc id="desc">担当者が業務フローを整理し、AI活用を現場に落とし込む様子のイラスト</desc>
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.58" stop-color="#eef4ff"/>
+      <stop offset="1" stop-color="#ecfeff"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#172033"/>
+      <stop offset="1" stop-color="#2357b8"/>
+    </linearGradient>
+    <filter id="shadow2" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#172033" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="900" fill="url(#bg2)"/>
+  <rect x="58" y="70" width="1084" height="760" rx="38" fill="#ffffff" filter="url(#shadow2)"/>
+
+  <g transform="translate(122 124)">
+    <text x="0" y="36" font-family="system-ui, sans-serif" font-size="34" font-weight="900" fill="#172033">現場で使えるAI活用に整理</text>
+    <text x="0" y="82" font-family="system-ui, sans-serif" font-size="23" font-weight="700" fill="#64748b">業務の流れを確認し、すぐ使えるテンプレート・手順に落とし込みます。</text>
+  </g>
+
+  <g transform="translate(124 250)">
+    <rect x="0" y="0" width="392" height="430" rx="26" fill="#f8fafc" stroke="#d9e2f2" stroke-width="3"/>
+    <text x="34" y="60" font-family="system-ui, sans-serif" font-size="28" font-weight="900" fill="#172033">Before</text>
+    <g font-family="system-ui, sans-serif" font-weight="800" font-size="23">
+      <rect x="34" y="96" width="310" height="62" rx="14" fill="#ffffff" stroke="#d9e2f2"/>
+      <text x="64" y="136" fill="#334155">メール返信に時間</text>
+      <rect x="34" y="184" width="310" height="62" rx="14" fill="#ffffff" stroke="#d9e2f2"/>
+      <text x="64" y="224" fill="#334155">資料作成が属人化</text>
+      <rect x="34" y="272" width="310" height="62" rx="14" fill="#ffffff" stroke="#d9e2f2"/>
+      <text x="64" y="312" fill="#334155">投稿文が続かない</text>
+    </g>
+    <path d="M70 372h214" stroke="#f47a2a" stroke-width="16" stroke-linecap="round"/>
+  </g>
+
+  <g transform="translate(565 250)">
+    <rect x="0" y="0" width="510" height="430" rx="26" fill="url(#screen)"/>
+    <text x="38" y="60" font-family="system-ui, sans-serif" font-size="28" font-weight="900" fill="#ffffff">After</text>
+    <g transform="translate(38 98)">
+      <rect x="0" y="0" width="198" height="106" rx="18" fill="#ffffff" opacity="0.96"/>
+      <text x="28" y="43" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#2357b8">AIテンプレート</text>
+      <path d="M28 72h134" stroke="#2357b8" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+      <rect x="234" y="0" width="198" height="106" rx="18" fill="#ffffff" opacity="0.96"/>
+      <text x="262" y="43" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#2357b8">作業手順</text>
+      <path d="M262 72h122" stroke="#2357b8" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+      <rect x="0" y="142" width="198" height="106" rx="18" fill="#ffffff" opacity="0.96"/>
+      <text x="28" y="185" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#2357b8">投稿文作成</text>
+      <path d="M28 214h130" stroke="#2357b8" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+      <rect x="234" y="142" width="198" height="106" rx="18" fill="#ffffff" opacity="0.96"/>
+      <text x="262" y="185" font-family="system-ui, sans-serif" font-size="22" font-weight="900" fill="#2357b8">資料構成</text>
+      <path d="M262 214h126" stroke="#2357b8" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+    </g>
+    <circle cx="424" cy="66" r="32" fill="#ffe66d"/>
+    <text x="424" y="76" text-anchor="middle" font-family="system-ui, sans-serif" font-size="28" font-weight="900" fill="#153d8a">AI</text>
+  </g>
+
+  <g transform="translate(505 440)">
+    <circle cx="0" cy="0" r="42" fill="#f47a2a"/>
+    <path d="M-15 -4h28M3 -22l24 22L3 22" fill="none" stroke="#ffffff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g transform="translate(204 735)">
+    <rect x="0" y="0" width="792" height="78" rx="39" fill="#eef4ff" stroke="#b8c9ef" stroke-width="3"/>
+    <text x="396" y="50" text-anchor="middle" font-family="system-ui, sans-serif" font-size="27" font-weight="900" fill="#2357b8">ツール紹介で終わらず、実務で使える形まで伴走</text>
+  </g>
+</svg>
