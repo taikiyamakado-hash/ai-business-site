@@ -162,6 +162,8 @@ a {
   display: grid;
   grid-template-columns: 1.02fr 0.98fr;
   gap: 46px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(420px, 0.92fr);
+  gap: 42px;
   align-items: center;
   padding: 48px 0 56px;
 }
@@ -186,15 +188,24 @@ a {
   font-weight: 900;
   letter-spacing: 0.08em;
 }
-
 .hero h1 {
   margin-top: 18px;
-  font-size: clamp(36px, 5.7vw, 64px);
-  line-height: 1.2;
+  font-size: clamp(40px, 3.15vw, 50px);
+  line-height: 1.28;
   letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: normal;
 }
 
 .hero h1 span {
+  display: block;
+}
+
+.hero-title-main {
+  color: var(--ink);
+}
+
+.hero-title-accent {
   color: var(--blue);
 }
 
@@ -202,8 +213,11 @@ a {
   margin-top: 24px;
   color: var(--text);
   font-size: 17px;
-  max-width: 640px;
+  max-width: 700px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
+
 
 .hero-actions {
   display: flex;
@@ -643,6 +657,17 @@ details p {
   .reason-list article {
     grid-template-columns: 1fr;
   }
+
+    .hero h1 {
+    font-size: clamp(36px, 8vw, 46px);
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .pc-break {
+    display: none;
+  }
+
 
   .feature-row,
   .works-grid {
