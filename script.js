@@ -1,6 +1,7 @@
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".site-nav");
 const fixedCta = document.querySelector(".fixed-cta");
+const inquiryForm = document.querySelector("#inquiry-form");
 
 if (menuButton && nav) {
   menuButton.addEventListener("click", () => {
@@ -46,4 +47,28 @@ if (fixedCta) {
 
   updateFixedCta();
   window.addEventListener("scroll", updateFixedCta, { passive: true });
+}
+
+if (inquiryForm) {
+  inquiryForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(inquiryForm);
+    const email = String(formData.get("メールアドレス") || "").trim();
+    const emailConfirm = String(formData.get("メールアドレス（確認用）") || "").trim();
+
+    if (email !== emailConfirm) {
+      alert("メールアドレスと確認用メールアドレスが一致していません。");
+      return;
+    }
+
+    const lines = [];
+    formData.forEach((value, key) => {
+      lines.push(`${key}: ${value}`);
+    });
+
+    const subject = encodeURIComponent("HPからのお問い合わせ");
+    const body = encodeURIComponent(lines.join("\n"));
+    window.location.href = `mailto:taiki.yamakado@ai-plus.school?subject=${subject}&body=${body}`;
+  });
 }
