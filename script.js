@@ -69,6 +69,6 @@ if (inquiryForm) {
 
     const subject = encodeURIComponent("HPからのお問い合わせ");
     const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:taiki.yamakado@ai-plus.school?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:t.yamakado.ai.partner@gmail.com?subject=${subject}&body=${body}`;
   });
 }
