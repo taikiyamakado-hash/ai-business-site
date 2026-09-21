@@ -1,74 +1,11 @@
-const menuButton = document.querySelector(".menu-button");
-const nav = document.querySelector(".site-nav");
-const fixedCta = document.querySelector(".fixed-cta");
-const inquiryForm = document.querySelector("#inquiry-form");
-
-if (menuButton && nav) {
-  menuButton.addEventListener("click", () => {
-    const isOpen = nav.classList.toggle("is-open");
-    menuButton.setAttribute("aria-expanded", String(isOpen));
-  });
-
-  nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      nav.classList.remove("is-open");
-      menuButton.setAttribute("aria-expanded", "false");
-    });
-  });
-}
-
-document.querySelectorAll('a[href^="#"]').forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const targetId = link.getAttribute("href");
-    if (!targetId || targetId === "#") return;
-
-    const target = document.querySelector(targetId);
-    if (!target) return;
-
-    event.preventDefault();
-    const headerHeight = document.querySelector(".site-header")?.offsetHeight || 0;
-    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
-
-    window.scrollTo({
-      top,
-      behavior: "smooth",
-    });
-  });
-});
-
-if (fixedCta) {
-  const updateFixedCta = () => {
-    const pastHero = window.scrollY > 520;
-    const nearBottom = window.innerHeight + window.scrollY > document.body.offsetHeight - 180;
-    const shouldShow = pastHero && !nearBottom;
-    fixedCta.style.opacity = shouldShow ? "1" : "0";
-    fixedCta.style.pointerEvents = shouldShow ? "auto" : "none";
-  };
-
-  updateFixedCta();
-  window.addEventListener("scroll", updateFixedCta, { passive: true });
-}
-
-if (inquiryForm) {
-  inquiryForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(inquiryForm);
-    const email = String(formData.get("メールアドレス") || "").trim();
-    const emailConfirm = String(formData.get("メールアドレス（確認用）") || "").trim();
-
-    if (email !== emailConfirm) {
-      alert("メールアドレスと確認用メールアドレスが一致していません。");
-      return;
-    }
-
-    const lines = [];
-    formData.forEach((value, key) => {
-      lines.push(`${key}: ${value}`);
-    });
-
-    const subject = encodeURIComponent("HPからのお問い合わせ");
-    const body = encodeURIComponent(lines.join("\n"));
-    window.location.href = `mailto:t.yamakado.ai.partner@gmail.com?subject=${subject}&body=${body}`;
-  });
-}
+"use strict";
+const menu = document.querySelector('.menu-button');
+const nav = document.querySelector('#site-nav');
+function closeMenu(){ nav.classList.remove('is-open'); menu.setAttribute('aria-expanded','false'); menu.setAttribute('aria-label','メニューを開く'); }
+menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';nav.classList.toggle('is-open',open);menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く');});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true'){closeMenu();menu.focus();}});
+document.addEventListener('click',e=>{if(!e.target.closest('.site-header'))closeMenu();});
+window.matchMedia('(min-width:801px)').addEventListener('change',closeMenu);
+document.querySelector('#year').textContent=new Date().getFullYear();
+document.querySelector('#inquiry-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const body=Array.from(data,([key,value])=>`${key}: ${String(value).trim()}`).join('\r\n\r\n');const href='mailto:t.yamakado.ai.partner@gmail.com?subject='+encodeURIComponent('HPからの無料相談・お問い合わせ')+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='メールアプリで内容をご確認のうえ、送信してください。開かない場合は t.yamakado.ai.partner@gmail.com 宛に直接お送りください。';window.location.href=href;});
