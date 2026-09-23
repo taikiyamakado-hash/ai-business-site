@@ -21,3 +21,35 @@ const inquiryMessage = document.querySelector('#inquiry-form textarea[name="ご�
 if (inquiryMessage && !inquiryMessage.value && Object.hasOwn(inquiryTemplates, requestedService)) {
   inquiryMessage.value = inquiryTemplates[requestedService];
 }
+
+// Load and play motion only while visible; honor reduced motion and data saving.
+const motion = document.querySelector('.portfolio-motion');
+const motionToggle = document.querySelector('.motion-toggle');
+if (motion && motionToggle) {
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  let userPaused = false, userStarted = false, visible = false;
+  function syncMotionUI() {
+    motionToggle.textContent = motion.paused ? '▶ 再生' : 'Ⅱ 一時停止';
+    motionToggle.setAttribute('aria-label', motion.paused ? '動画プレビューを再生' : '動画プレビューを一時停止');
+    motionToggle.setAttribute('aria-pressed', String(!motion.paused));
+  }
+  function startMotion() {
+    if (!motion.getAttribute('src')) motion.src = motion.canPlayType('video/webm; codecs="vp9"') ? motion.dataset.src : motion.dataset.mp4;
+    motion.muted = true;
+    motion.play().catch(syncMotionUI);
+  }
+  function reconcileMotion() {
+    const allowed = userStarted || (!reducedMotion.matches && !navigator.connection?.saveData);
+    if (visible && !document.hidden && !userPaused && allowed) startMotion();
+    else motion.pause();
+  }
+  motion.addEventListener('play', syncMotionUI);
+  motion.addEventListener('pause', syncMotionUI);
+  motionToggle.addEventListener('click', () => {
+    if (motion.paused) { userPaused = false; userStarted = true; startMotion(); }
+    else { userPaused = true; motion.pause(); }
+  });
+  new IntersectionObserver(entries => { visible = entries[0].isIntersecting; reconcileMotion(); }, {threshold: .2}).observe(motion);
+  document.addEventListener('visibilitychange', reconcileMotion);
+  reducedMotion.addEventListener('change', () => { userStarted = false; reconcileMotion(); });
+}

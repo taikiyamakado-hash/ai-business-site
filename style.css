@@ -34,3 +34,6 @@ body{background:#fffefa}.site-header{background:rgba(255,254,250,.96)}
 @media(prefers-reduced-motion:reduce){.portfolio-preview img{transition:none}}
 
 .preview-film img{object-fit:contain;background:#eee7da}
+
+/* NOMA motion preview: same card proportions, accessible pause control. */
+.portfolio-preview-shell{position:relative}.preview-film .portfolio-motion{width:100%;height:100%;object-fit:contain;background:#e9e1d2;display:block}.motion-toggle{position:absolute;left:13px;bottom:13px;z-index:2;border:1px solid #ffffffbb;background:#ffffffed;color:#3d574b;border-radius:20px;padding:7px 11px;font:inherit;font-size:10px;cursor:pointer}.motion-toggle:focus-visible{outline:3px solid #183047;outline-offset:3px}

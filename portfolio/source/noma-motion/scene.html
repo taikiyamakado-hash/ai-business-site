@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8"><style>body{margin:0;background:#e9e1d2}canvas{display:block;width:540px;height:720px}</style><script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script></head><body><script type="module">
+import * as T from 'three';
+import {RoomEnvironment} from 'three/addons/environments/RoomEnvironment.js';
+const W=720,H=960;
+const renderer=new T.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});renderer.setSize(540,720);renderer.setPixelRatio(1);renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=.95;
+const output=document.createElement('canvas');output.width=W;output.height=H;document.body.append(output);const ctx=output.getContext('2d');
+const scene=new T.Scene();scene.background=new T.Color('#e9e1d2');scene.fog=new T.Fog('#e9e1d2',16,30);
+scene.environment=new T.PMREMGenerator(renderer).fromScene(new RoomEnvironment(),.04).texture;
+const camera=new T.PerspectiveCamera(35,W/H,.1,60);
+scene.add(new T.HemisphereLight('#fff2d9','#686b50',.9));
+const sun=new T.DirectionalLight('#fff0d5',2.3);sun.position.set(-4,7,5);sun.castShadow=true;sun.shadow.mapSize.set(512,512);sun.shadow.camera.left=-6;sun.shadow.camera.right=6;sun.shadow.camera.top=7;sun.shadow.camera.bottom=-6;sun.shadow.normalBias=.025;sun.shadow.bias=-.0001;sun.shadow.radius=4;scene.add(sun);
+function noiseTexture(){const c=document.createElement('canvas');c.width=c.height=256;const q=c.getContext('2d');let v=21;function rand(){v=(v*16807)%2147483647;return v/2147483647}q.fillStyle='#d9cdb6';q.fillRect(0,0,256,256);for(let i=0;i<24000;i++){const x=rand()*256,y=rand()*256,r=rand()*1.4;q.fillStyle=`rgba(${rand()>.4?'95,78,52':'255,250,223'},${rand()*.15})`;q.fillRect(x,y,r,r)}const t=new T.CanvasTexture(c);t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(3,2);return t;}
+const stone=new T.MeshStandardMaterial({color:'#e2d7c4',map:noiseTexture(),roughness:.95});
+const floor=new T.Mesh(new T.PlaneGeometry(200,200),new T.MeshStandardMaterial({color:'#e8dfcd',roughness:.88}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+const pedestal=new T.Mesh(new T.CylinderGeometry(1.5,1.5,.55,96),stone);pedestal.position.y=.275;pedestal.receiveShadow=true;pedestal.castShadow=true;scene.add(pedestal);
+const product=new T.Group();scene.add(product);
+const glass=new T.MeshPhysicalMaterial({color:'#693609',metalness:.28,roughness:.16,transmission:0,thickness:.6,ior:1.48,transparent:true,opacity:1,clearcoat:1,envMapIntensity:.8});
+const pts=[[0,0],[.47,0],[.58,.055],[.61,.14],[.61,.92],[.58,1.02],[.28,1.08],[.23,1.14],[.23,1.38],[.28,1.40],[.28,1.47],[.20,1.47],[.18,1.40],[.18,1.16],[.52,.96],[.54,.18],[.47,.11],[0,.11]].map(p=>new T.Vector2(...p));
+const bottle=new T.Mesh(new T.LatheGeometry(pts,96),glass);bottle.castShadow=true;product.add(bottle);
+const liquid=new T.Mesh(new T.CylinderGeometry(.535,.535,.68,64),new T.MeshPhysicalMaterial({color:'#b57922',roughness:.16,metalness:.12,transparent:true,opacity:.65}));liquid.position.y=.47;product.add(liquid);
+const labelCanvas=document.createElement('canvas');labelCanvas.width=1024;labelCanvas.height=512;const lc=labelCanvas.getContext('2d');lc.fillStyle='#f5eedf';lc.fillRect(0,0,1024,512);lc.fillStyle='#414438';lc.textAlign='center';lc.font='76px Georgia';lc.fillText('N O M A',512,214);lc.font='19px sans-serif';lc.fillText('R O O M   F R A G R A N C E',512,278);lc.fillStyle='#7c8068';lc.fillRect(442,321,140,2);lc.font='19px Georgia';lc.fillText('Cedar  /  Bergamot',512,368);
+const labelTex=new T.CanvasTexture(labelCanvas);labelTex.colorSpace=T.SRGBColorSpace;
+const label=new T.Mesh(new T.CylinderGeometry(.615,.615,.64,64,1,true,-1.19,2.38),new T.MeshBasicMaterial({map:labelTex,side:T.DoubleSide}));label.position.y=.58;product.add(label);
+const reeds=[];for(let i=0;i<7;i++){const r=new T.Mesh(new T.CylinderGeometry(.016,.019,2.35+(i%3)*.12,12),new T.MeshStandardMaterial({color:i%2?'#302a21':'#423527',roughness:.78}));product.add(r);reeds.push(r);}
+const leaves=[];const leafShape=new T.Shape();leafShape.moveTo(0,-.4);leafShape.bezierCurveTo(.28,-.18,.22,.3,0,.48);leafShape.bezierCurveTo(-.22,.22,-.2,-.2,0,-.4);const leafGeo=new T.ShapeGeometry(leafShape,12);
+for(let i=0;i<11;i++){const mesh=new T.Mesh(leafGeo,new T.MeshStandardMaterial({color:i%3===0?'#9b9f74':'#6e7950',roughness:.6,side:T.DoubleSide}));mesh.castShadow=true;scene.add(mesh);leaves.push(mesh);}
+const smooth=x=>{x=T.MathUtils.clamp(x,0,1);return x*x*(3-2*x)};
+function text(str,y,size,alpha=1,spacing=0){ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle='#3c463a';ctx.textAlign='center';ctx.font=`${size}px ${size>28?'serif':'sans-serif'}`;if(spacing){const widths=[...str].map(c=>ctx.measureText(c).width);let x=(W-widths.reduce((a,b)=>a+b,0)-spacing*(str.length-1))/2;ctx.textAlign='left';[...str].forEach((c,i)=>{ctx.fillText(c,x,y);x+=widths[i]+spacing})}else ctx.fillText(str,W/2,y);ctx.restore();}
+window.renderFrame=(t)=>{
+ const assembly=smooth((t-2.1)/2.2);const end=smooth((t-10.2)/2.0);
+ product.position.y=.56 + (1-assembly)*.46;product.rotation.set(0,0,0);product.rotation.z=Math.sin(t*.65)*.025*(1-end);
+ let angle,dist,targetY,fov;
+ if(t<2.5){const p=smooth(t/2.5);angle=-.7+p*.50;dist=4.3+p*.7;targetY=1.55;fov=32;}
+ else if(t<6.4){const p=smooth((t-2.5)/3.9);angle=-.2+p*1.05;dist=9.2;targetY=2;fov=35;}
+ else if(t<9.6){const p=smooth((t-6.4)/3.2);angle=.38-p*.8;dist=4.15;targetY=1.28+p*.38;fov=33;}
+ else {const p=smooth((t-9.6)/3);angle=-.5*(1-p);dist=9.2;targetY=2.1;fov=35;}
+ camera.fov=fov;camera.position.set(Math.sin(angle)*dist,2.6+(t<2.5?.1:Math.sin(t*.4)*.17),Math.cos(angle)*dist);camera.lookAt(0,targetY,0);camera.updateProjectionMatrix();
+ reeds.forEach((r,i)=>{const a=(i-3)*.115;const insert=smooth((t-2.3-i*.095)/1.45);r.position.set(Math.sin(a)*1.05,2.28+(1-insert)*(1.5+Math.abs(i-3)*.12),.025*(i-3));r.rotation.set(.04*Math.sin(i),0,-a-(1-insert)*.22*(i-3));});
+ leaves.forEach((l,i)=>{const a=t*.55+i*2.399;const radius=2.05+Math.sin(i)*.5;l.position.set(Math.cos(a)*radius,.6+(i%5)*.55+Math.sin(a*1.4)*.24,Math.sin(a)*radius-.8);l.rotation.set(.5+Math.sin(a)*.4,a,i*.7+t*.4);l.scale.setScalar((.4+(i%3)*.1)*(1-end*.25));});
+ sun.position.x=-4+Math.sin(t*.4)*2;sun.intensity=2.2+Math.sin(t*.55)*.4;
+ renderer.render(scene,camera);ctx.drawImage(renderer.domElement,0,0,W,H);
+ const g=ctx.createLinearGradient(0,0,0,220);g.addColorStop(0,'rgba(244,237,223,.9)');g.addColorStop(1,'rgba(244,237,223,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,220);
+ const gb=ctx.createLinearGradient(0,760,0,H);gb.addColorStop(0,'rgba(238,230,215,0)');gb.addColorStop(1,'rgba(238,230,215,.92)');ctx.fillStyle=gb;ctx.fillRect(0,760,W,200);
+ text('NOMA',88,44,1,13);text('R O O M   F R A G R A N C E',119,11,.8);
+ const phase=t<2.5?0:t<6.4?1:t<9.6?2:3;const starts=[0,2.5,6.4,9.6],ends=[2.5,6.4,9.6,15];const alpha=smooth((t-starts[phase])/.4)*(phase===3?1:smooth((ends[phase]-t)/.3));
+ text(['A little air. A new rhythm.','Let the room come alive.','Warmth, in every detail.','Make room for calm.'][phase],857+(1-alpha)*15,30,alpha);
+ text(['CEDAR / BERGAMOT','SCENT IN MOTION','AMBER / LIGHT / TEXTURE','NOMA — ROOM FRAGRANCE'][phase],895,10,alpha,.8);
+ ctx.fillStyle='rgba(68,82,62,.16)';ctx.fillRect(52,932,616,1);ctx.fillStyle='#66735a';ctx.fillRect(52,932,616*t/15,1);
+ return output.toDataURL('image/png').split(',')[1];
+};window.renderFrame(11.8);window.ready=true;
+</script></body></html>
