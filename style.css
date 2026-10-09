@@ -37,3 +37,11 @@ body{background:#fffefa}.site-header{background:rgba(255,254,250,.96)}
 
 /* NOMA motion preview: same card proportions, accessible pause control. */
 .portfolio-preview-shell{position:relative}.preview-film .portfolio-motion{width:100%;height:100%;object-fit:contain;background:#e9e1d2;display:block}.motion-toggle{position:absolute;left:13px;bottom:13px;z-index:2;border:1px solid #ffffffbb;background:#ffffffed;color:#3d574b;border-radius:20px;padding:7px 11px;font:inherit;font-size:10px;cursor:pointer}.motion-toggle:focus-visible{outline:3px solid #183047;outline-offset:3px}
+
+/* Selected AI_Partner logo: concept 04, responsive horizontal lockup. */
+.brand .partner-mark{width:64px;height:36px;object-fit:contain;flex:none}
+.brand .partner-name{font-family:"Avenir Next",Avenir,"Helvetica Neue",Arial,sans-serif;font-size:25px;font-weight:500;letter-spacing:-.035em;line-height:1.2;color:#454644}
+.brand .partner-name small{font-family:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;font-size:9px;letter-spacing:.06em;line-height:1.5;margin-top:5px;color:#647589}
+.photo-stamp.partner-stamp{background:#fff;border-color:#fff;display:flex;align-items:center;justify-content:center;letter-spacing:normal}
+.partner-stamp img{width:48px;height:auto}
+@media(max-width:540px){.brand .partner-mark{width:49px;height:28px}.brand .partner-name{font-size:22px}.brand .partner-name small{font-size:8px}.partner-stamp img{width:38px}}
