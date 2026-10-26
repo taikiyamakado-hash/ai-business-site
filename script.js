@@ -13,6 +13,9 @@ document.querySelector('#inquiry-form').addEventListener('submit',e=>{e.preventD
 // Prefill the inquiry with the selected portfolio service, without submitting it.
 const requestedService = new URLSearchParams(window.location.search).get('service');
 const inquiryTemplates = {
+  'business-cards': '名刺管理アプリについて相談したいです。\n現在の名刺管理方法：\n月間の処理件数：\n困っていること：',
+  'minutes-safety': '議事録・安全書類作成の自動化について相談したいです。\n対象の会議・書類：\n使用している書式・ツール：\n困っていること：',
+  'expenses': '経費管理アプリについて相談したいです。\n現在の経費管理方法：\n月間の領収書件数：\n困っていること：',
   lp: '店舗・サービス紹介LPの制作について相談したいです。\n業種：\n目的：\nご希望の時期：',
   movie: '商品PR動画の制作について相談したいです。\n商品・サービス：\n掲載先：\nご希望の時期：',
   flyer: 'チラシ制作について相談したいです。\n掲載したい内容：\n配布する場所：\nご希望の時期：'
