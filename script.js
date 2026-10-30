@@ -11,10 +11,11 @@ document.querySelector('#year').textContent=new Date().getFullYear();
 const contactForm = document.querySelector('#inquiry-form');
 contactForm.addEventListener('submit',e=>{
  e.preventDefault(); const d=new FormData(contactForm);
- const body=['お名前：'+d.get('お名前'),'会社名・屋号：'+(d.get('会社名・屋号')||''),'メール：'+d.get('メールアドレス'),'','ご相談内容：',d.get('ご相談内容')].join('\n');
+ const body=['お名前：'+d.get('お名前'),'会社名・屋号：'+(d.get('会社名・屋号')||''),'メール：'+d.get('メールアドレス'),'希望サービス：'+(document.querySelector('#inquiry-service')?.selectedOptions[0]?.textContent||'未定'),'','ご相談内容：',d.get('ご相談内容')].join('\n');
  window.location.href='mailto:t.yamakado.ai.partner@gmail.com?subject='+encodeURIComponent('AI_Partnerへのお問い合わせ')+'&body='+encodeURIComponent(body);
  document.querySelector('#form-status').textContent='メールアプリで内容を確認し、送信してください。この操作だけでは送信されません。';
 });
+contactForm.querySelector('button[type="submit"]').disabled = false;
 
 // Prefill the inquiry with the selected portfolio service, without submitting it.
 const requestedService = new URLSearchParams(window.location.search).get('service');
@@ -62,3 +63,46 @@ if (motion && motionToggle) {
   document.addEventListener('visibilitychange', reconcileMotion);
   reducedMotion.addEventListener('change', () => { userStarted = false; reconcileMotion(); });
 }
+
+// Service tabs enhance the fully readable HTML; without JS all prices remain visible.
+const pricingTabs = Array.from(document.querySelectorAll('.pricing-tab'));
+const pricingPanels = Array.from(document.querySelectorAll('.pricing-panel'));
+function selectPricingTab(index, focus = false) {
+  pricingTabs.forEach((tab, i) => {
+    const selected = i === index;
+    tab.setAttribute('aria-selected', String(selected));
+    tab.tabIndex = selected ? 0 : -1;
+    const panel = document.getElementById(tab.getAttribute('aria-controls'));
+    panel.hidden = !selected;
+  });
+  if (focus) pricingTabs[index].focus();
+}
+if (pricingTabs.length) {
+  document.querySelector('.pricing-tabs').hidden = false;
+  pricingTabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectPricingTab(index));
+    tab.addEventListener('keydown', event => {
+      let next = index;
+      if (event.key === 'ArrowRight') next = (index + 1) % pricingTabs.length;
+      else if (event.key === 'ArrowLeft') next = (index + pricingTabs.length - 1) % pricingTabs.length;
+      else if (event.key === 'Home') next = 0;
+      else if (event.key === 'End') next = pricingTabs.length - 1;
+      else return;
+      event.preventDefault();
+      selectPricingTab(next, true);
+    });
+  });
+  const initialPanel = pricingPanels.findIndex(panel => '#' + panel.id === window.location.hash);
+  selectPricingTab(initialPanel >= 0 ? initialPanel : 0);
+}
+// Choosing a plan changes only the optional selector, never sends the inquiry or overwrites a draft.
+const serviceSelect = document.querySelector('#inquiry-service');
+document.querySelectorAll('[data-plan]').forEach(link => {
+  link.addEventListener('click', () => {
+    const key = link.dataset.plan;
+    if (serviceSelect && Array.from(serviceSelect.options).some(option => option.value === key)) {
+      serviceSelect.value = key;
+      document.querySelector('#form-status').textContent = 'ご希望のサービスを選択しました。内容を入力後、メールアプリで送信してください。';
+    }
+  });
+});
