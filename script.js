@@ -8,7 +8,13 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('
 document.addEventListener('click',e=>{if(!e.target.closest('.site-header'))closeMenu();});
 window.matchMedia('(min-width:801px)').addEventListener('change',closeMenu);
 document.querySelector('#year').textContent=new Date().getFullYear();
-document.querySelector('#inquiry-form').addEventListener('submit',e=>{e.preventDefault();const data=new FormData(e.currentTarget);const body=Array.from(data,([key,value])=>`${key}: ${String(value).trim()}`).join('\r\n\r\n');const href='mailto:t.yamakado.ai.partner@gmail.com?subject='+encodeURIComponent('HPからの無料相談・お問い合わせ')+'&body='+encodeURIComponent(body);document.querySelector('#form-status').textContent='メールアプリで内容をご確認のうえ、送信してください。開かない場合は t.yamakado.ai.partner@gmail.com 宛に直接お送りください。';window.location.href=href;});
+const contactForm = document.querySelector('#inquiry-form');
+contactForm.addEventListener('submit',e=>{
+ e.preventDefault(); const d=new FormData(contactForm);
+ const body=['お名前：'+d.get('お名前'),'会社名・屋号：'+(d.get('会社名・屋号')||''),'メール：'+d.get('メールアドレス'),'','ご相談内容：',d.get('ご相談内容')].join('\n');
+ window.location.href='mailto:t.yamakado.ai.partner@gmail.com?subject='+encodeURIComponent('AI_Partnerへのお問い合わせ')+'&body='+encodeURIComponent(body);
+ document.querySelector('#form-status').textContent='メールアプリで内容を確認し、送信してください。この操作だけでは送信されません。';
+});
 
 // Prefill the inquiry with the selected portfolio service, without submitting it.
 const requestedService = new URLSearchParams(window.location.search).get('service');
