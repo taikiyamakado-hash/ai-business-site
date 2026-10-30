@@ -10,8 +10,12 @@ window.matchMedia('(min-width:801px)').addEventListener('change',closeMenu);
 document.querySelector('#year').textContent=new Date().getFullYear();
 const contactForm = document.querySelector('#inquiry-form');
 let contactToken = '';
+async function contactFetch(url, options={}){
+ const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),15000);
+ try{return await fetch(url,{...options,signal:controller.signal});} finally{clearTimeout(timer);}
+}
 async function prepareContact(){
- const r = await fetch('contact-api/', {credentials:'same-origin',cache:'no-store'});
+ const r = await contactFetch('contact-api/', {credentials:'same-origin',cache:'no-store'});
  if(!r.ok) throw new Error('フォームの準備ができませんでした。メールでのご連絡もご利用ください。');
  const data=await r.json(); contactToken=data.token;
 }
@@ -23,10 +27,10 @@ contactForm.addEventListener('submit', async e=>{
  try {
   if(!contactToken) await prepareContact();
   const d=new FormData(contactForm);
-  const r=await fetch('contact-api/',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:contactToken,name:d.get('お名前'),company:d.get('会社名・屋号'),email:d.get('メールアドレス'),message:d.get('ご相談内容'),website:d.get('website')||'',consent:d.get('consent')||''})});
+  const r=await contactFetch('contact-api/',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:contactToken,name:d.get('お名前'),company:d.get('会社名・屋号'),email:d.get('メールアドレス'),message:d.get('ご相談内容'),website:d.get('website')||'',consent:d.get('consent')||''})});
   const data=await r.json(); if(!r.ok)throw new Error(data.error||'送信できませんでした。');
   status.textContent=data.message+' 受付番号：'+data.id; contactForm.reset(); contactToken='';
- } catch(err){status.textContent=err instanceof SyntaxError?'現在送信できません。メールでご連絡ください。':err.message;} finally {button.disabled=false;}
+ } catch(err){status.textContent=err.name==='AbortError'?'通信がタイムアウトしました。送信済みの場合もあります。重複送信を避けるため、メールでお問い合わせください。':err instanceof SyntaxError?'現在送信できません。メールでご連絡ください。':err.message;} finally {button.disabled=false;}
 });
 
 // Prefill the inquiry with the selected portfolio service, without submitting it.
